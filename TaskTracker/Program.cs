@@ -7,6 +7,8 @@ using System.IO.Pipelines;
 using System.Linq;
 using Microsoft.IdentityModel.Tokens;
 using models;
+using System.Text.RegularExpressions;
+using System.Data.Common;
 
 bool valid = true;
 var toDo = new ToDoTask();
@@ -17,53 +19,62 @@ while(valid == true)
 {
     Console.WriteLine("--------Task-Tracker--------");
     string? readResult = Console.ReadLine().ToLower();
+    
 
     if (readResult != null)
     {
-        if(Commands.Contains(readResult))
+        if(readResult.Contains("add"))
         {
-            switch (readResult)
+            string Padrao = @"""([^""]*)""";
+            using (var db = new AppDbContext())
             {
-                case "add":
+                var NewTask = new ToDoTask
+                {
+                    Description = Regex.Match(readResult, Padrao).Groups[1].Value
+                };
 
-                    using (var db = new AppDbContext())
-                    {
-                        var NewTask = new ToDoTask
-                        {
-                        Description = readResult.Replace("add",""),
-                        };
-
-                        db.items.Add(NewTask);
-                        db.SaveChanges();
-                        Console.WriteLine("Task Created!");
-                    }
-                    break;
-
-                case "update":
-                    break;
-
-                case "delete":
-                    break;
-
-                case "list":
-                    break;
-
-                case "mark-in-progress":
-                    break;
-
-                case "mark-done":
-                    break;
-                
-                case "commands":
-                    break;
+                db.items.Add(NewTask);
+                db.SaveChanges();
+                Console.WriteLine("Task Created!");
             }
-        }   
-        else
-        {
-            Console.WriteLine("Error, Command not found. Type 'commands' to see all commands");
         }
-                
+        else if(readResult.Contains("update"))
+        {
+            string Padrao = @"update\s+(?<id>\d+)\s+""(?<txt>[^""]*)""";
+            using (var db = new AppDbContext())
+            {
+                var UpdateTask = new ToDoTask
+                {
+                    Description = Regex.Match(readResult, Padrao).Groups["txt"].Value,
+                    Id = Convert.ToInt32(Regex.Match(readResult, Padrao).Groups["id"].Value)
+                };
+                db.Update(UpdateTask);
+                db.SaveChanges();
+                Console.WriteLine("Task Updated!");
+            };
+        }    
+        else if(readResult.Contains("delete"))
+        {
+            string Padrao = @"\bdelete\s+(?<id>\d+)";
+            using (var db = new AppDbContext())
+            {
+                var DeleteTask = new ToDoTask
+                {
+                    Id = Convert.ToInt32(Regex.Match(readResult, Padrao).Groups["id"].Value)
+                };
+                db.Remove(DeleteTask);
+                db.SaveChanges();
+                Console.WriteLine("Task Deleted!");
+            };           
+        }
+
+    }   
+    else
+    {
+        Console.WriteLine("Error, Command not found. Type 'commands' to see all commands");
     }
+                
 }
+
 
 
