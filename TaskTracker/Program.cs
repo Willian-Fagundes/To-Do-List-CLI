@@ -46,22 +46,23 @@ while(valid == true)
             taskOperations.MarkDone(readResult);
         }
     
-    else if (readResult.Contains("list"))
+        else if (readResult.Contains("list"))
         {
             taskOperations.List(readResult);
         }
 
-    else if (readResult.Contains("quit"))
+        else if (readResult.Contains("quit"))
         {
             Console.WriteLine("Bye!");
             valid = false;
         }
-
+        
+        else
+        {
+            Console.WriteLine("Error, Command not found. Type 'commands' to see all commands");
+        }
     }   
-    else
-    {
-        Console.WriteLine("Error, Command not found. Type 'commands' to see all commands");
-    }
+        
                 
 }
 
