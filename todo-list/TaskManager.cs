@@ -9,8 +9,7 @@ using System.IO;
 
 public class TaskOperations
 {
-    
-   
+
     public string Validate(string input)
     {
         var commands = new List<string> { "add", "delete", "list", "update" };
@@ -36,17 +35,25 @@ public class TaskOperations
 
     public void Create(string input)
     {
-        List<ToDoTask> listaTarefas = new List<ToDoTask>();
-        
         string pattern = @"""(?<txt>[^""]*)""";
         string description = "";
         Match match = Regex.Match(input, pattern);
         
         if(match.Success)
         {
+            
+            List<ToDoTask> todoList = new List<ToDoTask>();
+            FileHandler.LoadJson(ref todoList);
             description = match.Groups["txt"].Value;
-            Console.WriteLine(description);
-            Console.WriteLine("Task Added!");
+            var todo = new ToDoTask()
+            {
+                Id = todoList.Count + 1,
+                Description = description
+            
+            };
+            todoList.Add(todo);
+            FileHandler.Savejson(todoList); 
+                
         }
 
         else
@@ -54,14 +61,7 @@ public class TaskOperations
             Console.WriteLine("Erro descrição não encontrada! Digite 'commands' para lista de comandos");
         }
 
-        var todo = new ToDoTask()
-        {
-            Id = todoList.Count += 1,
-            Description = description
-            
-        };
-        todoList.Add(todo);
-        SaveJson();
+               
     }
 }
     /*

@@ -53,7 +53,7 @@ TaskManager.cs: Classe responsável pela lógica de negócio (Adicionar, Remover
 Navegar até a pasta:
 
     Bash
-    cd todo-list-csharp
+    cd todo-list
 Executar a aplicação:
 
     Bash

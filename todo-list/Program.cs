@@ -11,7 +11,6 @@ using System.Text.RegularExpressions;
 using System.Data.Common;
 
 TaskOperations taskOperations = new TaskOperations();
-
 bool valid = true;
 
 while(valid == true)
