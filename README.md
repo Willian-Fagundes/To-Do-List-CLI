@@ -1,4 +1,9 @@
 # Task-Tracker-CLI
+![C#](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white)
+
+![.NET](https://img.shields.io/badge/.NET-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)
+
+![JSON](https://img.shields.io/badge/json-5E5E5E?style=for-the-badge&logo=json&logoColor=white)
 
 (PT-BR).
 
@@ -59,3 +64,29 @@ Executar a aplicação:
     Bash
     dotnet run
 ## **5. Exemplo de Uso**
+
+  Após iniciar a aplicação com dotnet run, você poderá interagir com o sistema através dos seguintes comandos no console:
+  
+    add "description"
+    
+    update "id" "description"
+    
+    delete "id"
+    
+    list
+    
+    list todo
+    
+    list done
+    
+    list in-progress
+
+## **6. Próximos Passos**
+
+O desenvolvimento deste projeto permitiu uma imersão profunda em C# e lógica de programação. Embora funcional, o Task-Tracker-CLI é um projeto vivo. Futuras iterações podem incluir:
+
+Implementação de datas de entrega (due dates).
+
+Priorização de tarefas (Alta, Média, Baixa).
+
+Categorização por tags/projetos.
